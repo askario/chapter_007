@@ -2,9 +2,12 @@ package ru.job4j.concurrent;
 
 public class ThreadState {
     public static void main(String[] args) {
-        Runnable threadBody = () -> System.out.println(Thread.currentThread().getName());
-        Thread first = new Thread(threadBody),
-                second = new Thread(threadBody);
+        Thread first = new Thread(
+                () -> System.out.println(Thread.currentThread().getName())
+        );
+        Thread second = new Thread(
+                () -> System.out.println(Thread.currentThread().getName())
+        );
 
         System.out.println(first.getState());
         first.start();
