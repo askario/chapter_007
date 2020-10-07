@@ -9,11 +9,12 @@ public class CASCount<T> {
     private final AtomicReference<Integer> count = new AtomicReference<>(0);
 
     public void increment() {
+        Integer ref;
         Integer temp;
         do {
-            temp = count.get();
-            temp++;
-        } while (!count.compareAndSet(count.get(), temp));
+            ref = count.get();
+            temp = ref + 1;
+        } while (!count.compareAndSet(ref, temp));
     }
 
     public int get() {
