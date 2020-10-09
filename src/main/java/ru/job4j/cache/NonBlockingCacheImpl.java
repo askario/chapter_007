@@ -14,13 +14,12 @@ public class NonBlockingCacheImpl implements NonBlockingCache<Base> {
     @Override
     public void update(Base model) {
         cache.computeIfPresent(model.getId(), (id, base) -> {
-            if (model.getVersion() == cache.get(id).getVersion()) {
-                base.setName(model.getName());
-                base.updateVersion();
-                return base;
-            } else {
+            if (model.getVersion() != cache.get(id).getVersion()) {
                 throw new OptimisticException("Version of given object not corresponds to current");
             }
+            base.setName(model.getName());
+            base.updateVersion();
+            return base;
         });
     }
 
