@@ -17,6 +17,12 @@ public class Node<T> {
     }
 
     public T getValue() {
-        return value;
+        T cloned = null;
+        try {
+            cloned = (T) value.getClass().getMethod("clone").invoke(value);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return cloned;
     }
 }
