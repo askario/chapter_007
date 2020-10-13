@@ -1,8 +1,8 @@
 package ru.job4j.linked;
 
-import net.jcip.annotations.ThreadSafe;
+import net.jcip.annotations.Immutable;
 
-@ThreadSafe
+@Immutable
 public class Node<T> {
     private final Node next;
     private final T value;
