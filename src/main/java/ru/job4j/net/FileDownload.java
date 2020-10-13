@@ -4,10 +4,17 @@ import java.io.BufferedInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class FileDownload {
     private String file = "https://raw.githubusercontent.com/peterarsentev/course_test/master/pom.xml";
     private int downloadSpeed = 200;
+    private final ExecutorService pool = Executors.newFixedThreadPool(
+            Runtime.getRuntime().availableProcessors()
+    );
 
     public FileDownload(String file, int downloadSpeed) {
         this.file = file;
@@ -16,7 +23,17 @@ public class FileDownload {
 
     public static void main(String[] args) throws Exception {
         if (args.length > 1) {
-            new FileDownload(args[0], parseInt(args[1])).downloadFile();
+            FileDownload fileDownload = new FileDownload(args[0], parseInt(args[1]));
+            fileDownload.downloadFile();
+            ExecutorService pool = fileDownload.getPool();
+            pool.submit(new Callable<String>() {
+                @Override
+                public String call() throws Exception {
+                    fileDownload.downloadFile();
+                    return "Success";
+                }
+            });
+            pool.shutdown();
         } else {
             System.out.println("Please enter url and download speed limit");
         }
@@ -38,7 +55,7 @@ public class FileDownload {
                 if (speed > limit) {
                     long sleepTime = (long) (speed * 100 / limit);
                     System.out.println("Pause: " + sleepTime + " ms");
-                    Thread.sleep(sleepTime);
+                    TimeUnit.MILLISECONDS.sleep(sleepTime);
                 }
             }
         } catch (IOException e) {
@@ -52,5 +69,9 @@ public class FileDownload {
         } catch (NumberFormatException e) {
             return 100;
         }
+    }
+
+    private ExecutorService getPool() {
+        return pool;
     }
 }
