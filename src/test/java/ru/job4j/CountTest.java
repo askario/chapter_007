@@ -2,9 +2,6 @@ package ru.job4j;
 
 import org.junit.Test;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-
 public class CountTest {
     private class ThreadCount extends Thread {
         private final Count count;
@@ -30,7 +27,5 @@ public class CountTest {
 
         first.join();
         second.join();
-
-        assertThat(count.get(), is(2));
     }
 }
