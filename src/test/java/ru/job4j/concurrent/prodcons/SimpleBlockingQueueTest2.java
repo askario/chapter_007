@@ -28,7 +28,7 @@ public class SimpleBlockingQueueTest2 {
             while (!queue.isEmpty() || !Thread.currentThread().isInterrupted()) {
                 try {
                     buffer.add(queue.poll());
-                } catch (InterruptedException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     Thread.currentThread().interrupt();
                 }

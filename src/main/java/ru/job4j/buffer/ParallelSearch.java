@@ -10,7 +10,7 @@ public class ParallelSearch {
             while (!Thread.currentThread().isInterrupted()) {
                 try {
                     System.out.println(queue.poll());
-                } catch (InterruptedException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     Thread.currentThread().interrupt();
                 }
