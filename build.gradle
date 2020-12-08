@@ -17,6 +17,7 @@ dependencies {
     compile group: 'net.jcip', name: 'jcip-annotations', version: '1.0'
     compileOnly 'org.projectlombok:lombok:1.18.12'
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '2.1.0'
 
     testCompileOnly 'org.projectlombok:lombok:1.18.12'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
